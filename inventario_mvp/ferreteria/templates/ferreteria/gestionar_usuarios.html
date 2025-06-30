@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios</title>
+    {% load static %}
+    
+</head>
+<body>
+    <form>
+        <h2>Lista de Usuarios</h2>
+    </form>
+    <table style="margin:auto; background:#1e1e1e; color:#eee; border-collapse: collapse;">
+        <tr style="background:#333;">
+            <th style="padding:10px;">Usuario</th>
+            <th style="padding:10px;">Rol Actual</th>
+            <th style="padding:10px;">Cambiar Rol</th>
+        </tr>
+        {% for user in usuarios %}
+        <tr>
+            <td style="padding:10px;">{{ user.username }}</td>
+            <td style="padding:10px;">
+                {% if user.is_superuser %}
+                    Admin
+                {% else %}
+                    Cliente
+                {% endif %}
+            </td>
+            <td style="padding:10px;">
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <select name="rol">
+                        <option value="cliente" {% if not user.is_superuser %}selected{% endif %}>Cliente</option>
+                        <option value="admin" {% if user.is_superuser %}selected{% endif %}>Admin</option>
+                    </select>
+                    <input type="submit" value="Actualizar">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

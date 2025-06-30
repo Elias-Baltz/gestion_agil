@@ -2,14 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
+    <title>No autorizado</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'ferreteria/styles/registro.css' %}">
 </head>
 <body>
     <form>
-        <h2>Bienvenido, {{ usuario.username }}</h2>
-        <a href="{% url 'logout' %}">Cerrar sesión</a>
+        <h2>⚠️ Usuario no autorizado</h2>
+        <p>No tienes permiso para acceder a esta página.</p>
+        <a href="{% url 'inicio' %}">Volver al inicio</a>
     </form>
 </body>
 </html>
