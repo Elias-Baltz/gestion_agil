@@ -1,46 +1,56 @@
 body {
-    background: #121212;
-    color: #eee;
-    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    font-family: system-ui, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
 }
+
 form {
-    background: #1e1e1e;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 300px;
-    box-shadow: 0 0 10px #007acc;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    width: 280px;
+    border: 1px solid #ddd;
 }
-input[type="text"], input[type="password"] {
+
+input[type="text"],
+input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    margin-bottom: 12px;
-    border: none;
+    padding: 0.6rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    background: #333;
-    color: #eee;
+    background: #fafafa;
+    color: #333;
+    font-size: 0.95rem;
 }
+
 input[type="submit"] {
-    background-color: #007acc;
+    background: #4a90e2;
     color: white;
-    padding: 10px;
+    padding: 0.6rem;
     border: none;
     width: 100%;
     border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
+    font-size: 0.95rem;
 }
+
 input[type="submit"]:hover {
-    background-color: #005f99;
+    background: #3a78c2;
 }
+
 label {
-    font-weight: bold;
+    font-size: 0.85rem;
+    color: #555;
 }
+
 .messages {
     margin-bottom: 1rem;
-    color: #ff6f61;
+    color: #d9534f;
+    font-size: 0.85rem;
 }

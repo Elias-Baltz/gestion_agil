@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Producto</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'ferreteria/styles/registro.css' %}">
+</head>
+<body>
+    <form method="post">
+        <h2>Agregar Producto</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Guardar Producto">
+    </form>
+</body>
+</html>

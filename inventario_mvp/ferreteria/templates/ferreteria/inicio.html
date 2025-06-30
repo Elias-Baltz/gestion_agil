@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Inicio</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'ferreteria/styles/registro.css' %}">
 </head>
+
 <body>
     <form>
         <h2>Bienvenido, {{ usuario.username }}</h2>
-        <a href="{% url 'logout' %}">Cerrar sesión</a>
+
+        {% if request.user.is_staff or request.user.is_superuser %}
+            <p><a href="{% url 'agregar_producto' %}">➕ Agregar Producto</a></p>
+            <p><a href="{% url 'listar_productos' %}">📋 Ver Productos</a></p>
+        {% endif %}
+
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Cerrar sesión</button>
+        </form>
     </form>
 </body>
+
 </html>

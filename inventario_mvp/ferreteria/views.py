@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from .forms import ProductoForm
+from .models import Producto
 
 # Create your views here.
 def registro_usuario(request):
@@ -67,3 +69,20 @@ def gestionar_usuarios(request):
 
 def no_autorizado(request):
     return render(request, 'ferreteria/no_autorizado.html')
+
+@user_passes_test(es_admin, login_url='no_autorizado')
+def agregar_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('agregar_producto')  
+    else:
+        form = ProductoForm()
+    
+    return render(request, 'ferreteria/agregar_producto.html', {'form': form})
+
+@user_passes_test(es_admin, login_url='no_autorizado')
+def listar_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'ferreteria/listar_productos.html', {'productos': productos})
