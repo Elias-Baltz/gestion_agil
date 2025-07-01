@@ -129,4 +129,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'ferreteria/static'),
 ]
 
-LOGIN_URL = '/'
+LOGIN_URL = 'login' 

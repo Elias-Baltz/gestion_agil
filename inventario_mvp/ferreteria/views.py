@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .forms import ProductoForm
 from .models import Producto
+from django.contrib.auth import logout
 
 # Create your views here.
 def registro_usuario(request):
@@ -86,3 +87,7 @@ def agregar_producto(request):
 def listar_productos(request):
     productos = Producto.objects.all()
     return render(request, 'ferreteria/listar_productos.html', {'productos': productos})
+
+def logout_usuario(request):
+    logout(request)
+    return redirect('login')
