@@ -4,47 +4,71 @@
 
 {% block menu %}
 <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="{% url 'agregar_producto' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Agregar Producto</a>
-    <a href="{% url 'listar_productos' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Ver Productos</a>
-    <a href="{% url 'gestionar_usuarios' %}" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Gestionar Usuarios</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+        onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="{% url 'agregar_producto' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i> 
+        Agregar Producto</a>
+    <a href="{% url 'listar_productos' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Ver
+        Productos</a>
+    <a href="{% url 'gestionar_usuarios' %}" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Gestionar Usuarios</a>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="w3-container w3-padding-32">
-  <div class="w3-card-4 w3-white w3-padding w3-round-large" style="max-width:600px; margin:auto">
-    <h2 class="w3-center">Usuarios</h2>
-    <table style="margin:auto; background:#1e1e1e; color:#eee; border-collapse: collapse;">
-        <tr style="background:#333;">
-            <th style="padding:10px;">Usuario</th>
-            <th style="padding:10px;">Rol Actual</th>
-            <th style="padding:10px;">Cambiar Rol</th>
-        </tr>
-        {% for user in usuarios %}
-        <tr>
-            <td style="padding:10px;">{{ user.username }}</td>
-            <td style="padding:10px;">
-                {% if user.is_superuser %}
+    <div class="w3-card-4 w3-white w3-padding w3-round-large" style="max-width:600px; margin:auto">
+        <h2 class="w3-center">Usuarios</h2>
+        {% if messages %}
+        <div class="w3-container" style="max-width:600px; margin:auto;">
+            {% for message in messages %}
+            <div
+                class="w3-panel {% if message.tags == 'success' %}w3-green{% elif message.tags == 'error' %}w3-red{% else %}w3-light-grey{% endif %} w3-round">
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <table style="margin:auto; background:#1e1e1e; color:#eee; border-collapse: collapse;">
+            <tr style="background:#333;">
+                <th style="padding:10px;">Usuario</th>
+                <th style="padding:10px;">Rol Actual</th>
+                <th style="padding:10px;">Cambiar Rol</th>
+            </tr>
+            {% for user in usuarios %}
+            <tr>
+                <td style="padding:10px;">{{ user.username }}</td>
+                <td style="padding:10px;">
+                    {% if user.is_superuser %}
                     Admin
-                {% else %}
+                    {% else %}
                     Cliente
-                {% endif %}
-            </td>
-            <td style="padding:10px;">
-                <form method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <select name="rol">
-                        <option value="cliente" {% if not user.is_superuser %}selected{% endif %}>Cliente</option>
-                        <option value="admin" {% if user.is_superuser %}selected{% endif %}>Admin</option>
-                    </select>
-                    <input type="submit" value="Actualizar">
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-  </div>
+                    {% endif %}
+                </td>
+                <td style="padding:10px;">
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <select name="rol">
+                            <option value="cliente" {% if not user.is_superuser %}selected{% endif %}>Cliente</option>
+                            <option value="admin" {% if user.is_superuser %}selected{% endif %}>Admin</option>
+                        </select>
+                        <input type="submit" value="Actualizar" onclick="return confirmarCambioRol(this.form);">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
+
+<script>
+    function confirmarCambioRol(form) {
+        const select = form.querySelector('select[name="rol"]');
+        const nuevoRol = select.value === 'admin' ? 'Administrador' : 'Cliente';
+        const confirmacion = confirm(`¿Estás seguro de que querés cambiar el rol a ${nuevoRol}?`);
+        return confirmacion;
+    }
+</script>
 {% endblock %}

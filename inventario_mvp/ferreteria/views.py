@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from .forms import ProductoForm
 from .models import Producto
 from django.contrib.auth import logout
+from django.contrib import messages
+
 
 # Create your views here.
 def registro_usuario(request):
@@ -60,8 +62,9 @@ def gestionar_usuarios(request):
                 usuario.is_superuser = False
 
             usuario.save()
+            messages.success(request, f'Rol de {usuario.username} modificado exitosamente.')
         except User.DoesNotExist:
-            pass
+            messages.error(request, 'El usuario no existe.')
 
         return redirect('gestionar_usuarios')
 
@@ -71,6 +74,7 @@ def gestionar_usuarios(request):
         'usuario': request.user
     }
     return render(request, 'ferreteria/gestionar_usuarios.html', context)
+
 
 def no_autorizado(request):
     return render(request, 'ferreteria/no_autorizado.html')
