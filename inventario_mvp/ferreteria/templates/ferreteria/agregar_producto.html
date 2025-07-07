@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Agregar Producto</title>
-  <head>
-    <meta charset="UTF-8">
-    <title>Agregar Producto</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'ferreteria/styles/agregar.css' %}">
-</head>
-</head>
-<body>
+{% extends 'ferreteria/dashboard_base.html' %}
 
-  <div class="centered-container">
+{% block title %}Agregar Producto{% endblock %}
+
+{% block menu %}
+<div class="w3-bar-block">
+  <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()"
+    title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+  <a href="{% url 'agregar_producto' %}" class="w3-bar-item w3-button w3-padding w3-blue"><i
+      class="fa fa-users fa-fw"></i>  Agregar Producto</a>
+  <a href="{% url 'listar_productos' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Ver
+    Productos</a>
+  <a href="{% url 'gestionar_usuarios' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i> 
+    Gestionar Usuarios</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-padding-32">
+  <div class="w3-card-4 w3-white w3-padding w3-round-large" style="max-width:600px; margin:auto">
+    {% if messages %}
+    <div class="w3-container" style="max-width:600px; margin:auto">
+      {% for message in messages %}
+      <div
+        class="w3-panel {% if message.tags == 'success' %}w3-green{% elif message.tags == 'error' %}w3-red{% else %}w3-light-grey{% endif %} w3-round">
+        <p>{{ message }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <h2 class="w3-center">Agregar Producto</h2>
     <form method="post">
-      <h2>Agregar Producto</h2>
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" value="Guardar Producto">
+      <input type="submit" value="Guardar Producto" class="w3-button w3-teal w3-margin-top" style="margin-left: 35%;">
     </form>
   </div>
-
-</body>
-</html>
+</div>
+{% endblock %}

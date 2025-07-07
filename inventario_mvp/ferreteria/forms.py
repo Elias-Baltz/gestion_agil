@@ -14,5 +14,9 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = ['nombre', 'descripcion', 'precio', 'stock']
         widgets = {
-            'descripcion': forms.Textarea(attrs={'rows': 3}),
+            'descripcion': forms.Textarea(attrs={
+                'draggable': 'false',
+                'rows': 4,
+                'cols': 40
+            }),
         }

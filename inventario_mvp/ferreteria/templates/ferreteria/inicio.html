@@ -15,9 +15,7 @@
         <br>
 
         {% if request.user.is_staff or request.user.is_superuser %}
-        <p><a href="{% url 'agregar_producto' %}">➕ Agregar Producto</a></p>
-        <p><a href="{% url 'listar_productos' %}">📋 Ver Productos</a></p>
-        <p><a href="{% url 'gestionar_usuarios' %}">👤 Gestionar Usuarios</a></p>
+        <p><a href="{% url 'agregar_producto' %}">➕ Dashboard</a></p>
         {% endif %}
 
         

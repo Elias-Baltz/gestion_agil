@@ -11,4 +11,5 @@ urlpatterns = [
     path('no-autorizado/', views.no_autorizado, name='no_autorizado'),
     path('productos/agregar/', views.agregar_producto, name='agregar_producto'),
     path('productos/', views.listar_productos, name='listar_productos'),   
+    path('dashboard/', views.dashboard, name='dashboard'),   
 ]

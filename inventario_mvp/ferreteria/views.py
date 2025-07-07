@@ -66,7 +66,11 @@ def gestionar_usuarios(request):
         return redirect('gestionar_usuarios')
 
     usuarios = User.objects.all()
-    return render(request, 'ferreteria/gestionar_usuarios.html', {'usuarios': usuarios})
+    context = {
+        'usuarios': usuarios,
+        'usuario': request.user
+    }
+    return render(request, 'ferreteria/gestionar_usuarios.html', context)
 
 def no_autorizado(request):
     return render(request, 'ferreteria/no_autorizado.html')
@@ -77,16 +81,34 @@ def agregar_producto(request):
         form = ProductoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('agregar_producto')  
+            messages.success(request, 'Producto añadido correctamente.')
+            return redirect('agregar_producto')
+        else:
+            messages.error(request, 'No se logró añadir el producto.')
     else:
         form = ProductoForm()
-    
-    return render(request, 'ferreteria/agregar_producto.html', {'form': form})
+
+    context = {
+        'form': form,
+        'usuario': request.user
+    }
+    return render(request, 'ferreteria/agregar_producto.html', context)
 
 @user_passes_test(es_admin, login_url='no_autorizado')
 def listar_productos(request):
     productos = Producto.objects.all()
-    return render(request, 'ferreteria/listar_productos.html', {'productos': productos})
+    context = {
+        'productos': productos,
+        'usuario': request.user
+    }
+    return render(request, 'ferreteria/listar_productos.html', context)
+
+@user_passes_test(es_admin, login_url='no_autorizado')
+def dashboard(request):
+    context = {
+        'usuario': request.user
+    }
+    return render(request, 'ferreteria/dashboard_base.html', context)
 
 def logout_usuario(request):
     logout(request)
